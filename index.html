@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="assets/html5-qrcode.min.js"></script>
+    <script src="assets/xlsx.full.min.js"></script>
+    <link href="assets/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <title>Aplikasi Scanner Kehadiran</title>
+</head>
+<body>
+    <h1>Aplikasi <i>Scanner</i> Kehadiran</h1>
+    <div style="width: 500px" id="reader"></div><br>
+    <b><h3 id="output"></h3></b><br>
+    <button class="btn btn-danger" id="export-btn">Export JSON to Excel</button>
+    <script>
+        // Declare a new array
+        var writeData = []
+        var newArray = [];
+
+        function removeDuplicates(writeData) {
+            // Declare an empty object
+            let uniqueObject = {};
+        
+            // Loop for the array elements
+            for (let i in writeData) {
+        
+                // Extract the title
+                objTitle = writeData[i]['decodedText'];
+        
+                // Use the title as the index
+                uniqueObject[objTitle] = writeData[i];
+            }
+        
+            // Loop to push unique object into array
+            for (i in uniqueObject) {
+                newArray.push(uniqueObject[i]);
+            }
+        
+            // Display the unique objects
+            console.log(newArray);
+        }
+        removeDuplicates();
+
+        function onScanSuccess(decodedText, decodedResult) {
+            // Handle on success condition with the decoded text or result.
+            console.log(`Scan result: ${decodedText}`, decodedResult);
+            writeData.push({decodedText})
+            var audio = new Audio('assets/mariocoin.mp3');
+            audio.play();
+            document.getElementById('output').innerHTML = "Kehadiran berhasil dicatat: " + decodedText
+        }
+
+        // Function to export JSON data to Excel
+        function exportJsonToExcel() {
+            dateJs = new Date()
+            // Create a new workbook
+            const workbook = XLSX.utils.book_new();
+
+            // Convert JSON data to a worksheet
+            console.log(removeDuplicates(writeData))
+            const worksheet = XLSX.utils.json_to_sheet(newArray);
+
+            // Append the worksheet to the workbook
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+            // Export the workbook as an Excel file
+            XLSX.writeFile(workbook, `Kehadiran Tahun ${dateJs.getFullYear()} - Bulan ${dateJs.getMonth()} - Tanggal ${dateJs.getDate()} Jam ${dateJs.getHours()} ${dateJs.getMinutes()} ${dateJs.getSeconds()}.xlsx`);
+        }
+        // Event listener for the export button
+        document.getElementById("export-btn").addEventListener("click", exportJsonToExcel);
+
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
+
+    </script>
+</body>
+</html>
