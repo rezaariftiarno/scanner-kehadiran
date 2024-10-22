@@ -66,7 +66,7 @@
             XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
             // Export the workbook as an Excel file
-            XLSX.writeFile(workbook, `Kehadiran Tahun ${dateJs.getFullYear()} - Bulan ${dateJs.getMonth()} - Tanggal ${dateJs.getDate()} Jam ${dateJs.getHours()} ${dateJs.getMinutes()} ${dateJs.getSeconds()}.xlsx`);
+            XLSX.writeFile(workbook, `Kehadiran Tahun ${dateJs.getFullYear()+1} - Bulan ${dateJs.getMonth()} - Tanggal ${dateJs.getDate()} Jam ${dateJs.getHours()} ${dateJs.getMinutes()} ${dateJs.getSeconds()}.xlsx`);
         }
         // Event listener for the export button
         document.getElementById("export-btn").addEventListener("click", exportJsonToExcel);
