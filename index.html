@@ -55,7 +55,6 @@
 
         // Function to export JSON data to Excel
         function exportJsonToExcel() {
-            var excelArray = [...newArray]
             dateJs = new Date()
             // Create a new workbook
             const workbook = XLSX.utils.book_new();
@@ -63,14 +62,13 @@
             // Convert JSON data to a worksheet
             console.log(removeDuplicates(writeData))
             console.log(newArray)
-            const worksheet = XLSX.utils.json_to_sheet(excelArray);
+            const worksheet = XLSX.utils.json_to_sheet(newArray);
 
             // Append the worksheet to the workbook
             XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
             // Export the workbook as an Excel file
             XLSX.writeFile(workbook, `Kehadiran Tahun ${dateJs.getFullYear()} - Bulan ${dateJs.getMonth()+1} - Tanggal ${dateJs.getDate()} Jam ${dateJs.getHours()} ${dateJs.getMinutes()} ${dateJs.getSeconds()}.xlsx`);
-            excelArray = []
         }
         // Event listener for the export button
         document.getElementById("export-btn").addEventListener("click", exportJsonToExcel);
