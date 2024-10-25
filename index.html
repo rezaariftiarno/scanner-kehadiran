@@ -12,7 +12,7 @@
 <body>
     <h1>Aplikasi <i>Scanner</i> Kehadiran</h1>
     <b><h3 id="output"></h3></b><br>
-    <div class="w-25 p-3" id="reader"></div><br>
+    <div class="w-250 p-3" id="reader"></div><br>
     <button class="btn btn-danger" id="export-btn">Export JSON to Excel</button>
     <script>
         // Declare a new array
@@ -64,7 +64,7 @@
         document.getElementById("export-btn").addEventListener("click", exportJsonToExcel);
         
         var html5QrcodeScanner = new Html5QrcodeScanner(
-            "reader", { fps: 10, qrbox: 360 });
+            "reader", { fps: 10, qrbox: 200 });
         html5QrcodeScanner.render(onScanSuccess);
     </script>
 </body>
