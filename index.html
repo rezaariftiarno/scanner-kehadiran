@@ -18,6 +18,8 @@
         // Declare a new array
         var writeData = []
         var newArray = [];
+        // Create a new workbook
+        const workbook = XLSX.utils.book_new();
         // Convert JSON data to a worksheet
         const worksheet = XLSX.utils.json_to_sheet(newArray);
 
@@ -57,8 +59,6 @@
         // Function to export JSON data to Excel
         function exportJsonToExcel() {
             dateJs = new Date()
-            // Create a new workbook
-            const workbook = XLSX.utils.book_new();
 
             // Append the worksheet to the workbook
             XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
