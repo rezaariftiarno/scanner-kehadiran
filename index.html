@@ -18,6 +18,8 @@
         // Declare a new array
         var writeData = []
         var newArray = [];
+        // Convert JSON data to a worksheet
+        const worksheet = XLSX.utils.json_to_sheet(newArray);
 
         function removeDuplicates(writeData) {
             // Declare an empty object
@@ -57,11 +59,6 @@
             dateJs = new Date()
             // Create a new workbook
             const workbook = XLSX.utils.book_new();
-
-            // Convert JSON data to a worksheet
-            console.log(removeDuplicates(writeData))
-            console.log("newArray: "+newArray)
-            const worksheet = XLSX.utils.json_to_sheet(newArray);
 
             // Append the worksheet to the workbook
             XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
